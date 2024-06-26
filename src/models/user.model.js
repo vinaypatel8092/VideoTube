@@ -60,7 +60,7 @@ userSchema.pre("save", async function(next) {
 
     // hash the password
     this.password = bcrypt.hash(this.password, 10);
-    next() ;
+    next();
 });
 
 // we can create any custom method using "methods"
