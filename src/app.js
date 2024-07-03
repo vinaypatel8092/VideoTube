@@ -18,4 +18,10 @@ app.use(express.static("public"));
 // accessing cookie and performing CRUD op. on cookiee
 app.use(cookieParser());
 
+// routes import
+import userRouter from "./routes/user.routes.js";
+
+// routes declaration
+app.use("/api/v1/users", userRouter);
+
 export { app };
