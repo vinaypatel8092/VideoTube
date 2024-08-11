@@ -1,6 +1,6 @@
 # Backend Project from Hitesh Sir's Chai aur Code Channel
 
-- [Model Link](https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj)
+### [Model Link](https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj)
 
 ### HTTP Headers:
     - HTTP Headers are the metadata which are the key-value pairs sent along with "Request" & "Response"
@@ -8,33 +8,33 @@
     - Request Headers basically contain info about request, like where it came from, who sent request, etc.
     - Response Headers contain info about respose sent by server, like status of the response(404, 200), etc.
 
-- Some categories of Headers:
-    - Request Headers -> from client
-    - Response Headers -> from server
-    - Representation Headers -> encoding/compression -> used to show data is in which encoding/compression
-    - Payload Headers -> data -> used send data in headers, like _id, name, email, etc.
+    - Some categories of Headers:
+        - Request Headers -> from client
+        - Response Headers -> from server
+        - Representation Headers -> encoding/compression -> used to show data is in which encoding/compression
+        - Payload Headers -> data -> used send data in headers, like _id, name, email, etc.
 
-- There are many other types of Headers
+    - There are many other types of Headers
 
 
-- Most Common Headers
-    - Accept : shows which kind of data it accepts -> ex. application/json
-    - User-Agent : shows that request came from which application
-    - Authorization : used send Bearer Token
-    - Content-Type : images, pdfs, videos, etc.
-    - Cookie : Cookies info(expiratin time, etc.)
-    - Cache-Control : when to expire data
+    - Most Common Headers
+        - Accept : shows which kind of data it accepts -> ex. application/json
+        - User-Agent : shows that request came from which application
+        - Authorization : used send Bearer Token
+        - Content-Type : images, pdfs, videos, etc.
+        - Cookie : Cookies info(expiratin time, etc.)
+        - Cache-Control : when to expire data
 
-- CORS Headers
-    - Access-Control-Allow-Origin
-    - Access-Control-Allow-Credentials
-    - Access-Control-Allow-Method
+    - CORS Headers
+        - Access-Control-Allow-Origin
+        - Access-Control-Allow-Credentials
+        - Access-Control-Allow-Method
 
-- Security
-    - Cross-Origin-Embedder-Policy
-    - Cross-Origin-Opener-Policy
-    - Content-Security-Policy
-    - X-XSS-Protection
+    - Security
+        - Cross-Origin-Embedder-Policy
+        - Cross-Origin-Opener-Policy
+        - Content-Security-Policy
+        - X-XSS-Protection
 
 ### HTTP Methods
     - Basic set of operations that can be used to interact with server
@@ -55,19 +55,19 @@
     - 4xx -> Client Error
     - 5xx -> Server Error
 
-- 100 Continue          
-- 102 Processing
-- 200 OK
-- 201 Created
-- 202 Accepted
-- 307 temporary redirect
-- 308 permanent redirect
-- 400 Bad Request
-- 401 Unauthorized
-- 402 Payment Required
-- 404 Not Found
-- 500 Internal Server Error
-- 504 Gateway Timeout
+    - 100 Continue
+    - 102 Processing
+    - 200 OK
+    - 201 Created
+    - 202 Accepted
+    - 307 temporary redirect
+    - 308 permanent redirect
+    - 400 Bad Request
+    - 401 Unauthorized
+    - 402 Payment Required
+    - 404 Not Found
+    - 500 Internal Server Error
+    - 504 Gateway Timeout
 
 #
 
@@ -80,17 +80,17 @@
 
 
 ## Note:
-- When we want to access our defined methods then it is accessed by instance we found from the DB, like in loginUser -> user is the instance through which we can access our defined methods
-- ex. user.isPasswordCorrect()
+    - When we want to access our defined methods then it is accessed by instance we found from the DB, like in loginUser -> user is the instance through which we can access our defined methods
+    - ex. user.isPasswordCorrect()
 
 ##
 ### Cookies:
-- To set Cookie
-    - options if cookie is only modified from server
-    - req.cookie("cookieName", cookieData, options)
+    - To set Cookie
+        - options if cookie is only modified from server
+        - req.cookie("cookieName", cookieData, options)
 
-- To access cookie
-    - req.cookies.<cookie_name>
+    - To access cookie
+        - req.cookies.<cookie_name>
 
-- To remove cookie
-    - req.clearCookie("cookieName", options)
+    - To remove cookie
+        - req.clearCookie("cookieName", options)
