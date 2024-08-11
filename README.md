@@ -2,7 +2,7 @@
 
 - [Model Link](https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj)
 
-- HTTP Headers:
+### HTTP Headers:
     - HTTP Headers are the metadata which are the key-value pairs sent along with "Request" & "Response"
     - We can also create our own Headers
     - Request Headers basically contain info about request, like where it came from, who sent request, etc.
@@ -36,7 +36,7 @@
     - Content-Security-Policy
     - X-XSS-Protection
 
-- HTTP Methods
+### HTTP Methods
     - Basic set of operations that can be used to interact with server
 
     - GET : retrive a resource
@@ -48,7 +48,7 @@
     - POST : interact with resource (mostly add)
     - PATCH : change part of a resource
 
-- HTTP Status Code
+### HTTP Status Code
     - 1xx -> Informational
     - 2xx -> Success
     - 3xx -> Redirection
@@ -68,3 +68,29 @@
 - 404 Not Found
 - 500 Internal Server Error
 - 504 Gateway Timeout
+
+#
+
+### Access Token & Refresh Token
+    - Token are of same kind and also generated same way but the only difference is their "Expiry Time",
+    - Access Token is Short Lived (ex. 15 min)
+    - Referesh Token is Long Lived (ex. 30 Days)
+    - With the use of Access Token, you can access some features of app. directly where you are authenticated(using Access Token)
+    - And while Access Token expires, there comes Refresh Token, so what happen is that instead LoggingIn using password every time, here Refresh Token is used, user's Refresh Token and Refresh Token stored in DB are compared and a new Access Token is generated
+
+
+## Note:
+- When we want to access our defined methods then it is accessed by instance we found from the DB, like in loginUser -> user is the instance through which we can access our defined methods
+- ex. user.isPasswordCorrect()
+
+##
+### Cookies:
+- To set Cookie
+    - options if cookie is only modified from server
+    - req.cookie("cookieName", cookieData, options)
+
+- To access cookie
+    - req.cookies.<cookie_name>
+
+- To remove cookie
+    - req.clearCookie("cookieName", options)
