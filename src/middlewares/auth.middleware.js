@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
 
+// Here _ instead of res specify that it is not used anywhere
 export const verifyJWT = asyncHandler(async (req, _, next) => {
     try {
         // take token from cookies or headers(in case its a mobile app)
