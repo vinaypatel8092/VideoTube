@@ -94,3 +94,32 @@
 
     - To remove cookie
         - req.clearCookie("cookieName", options)
+
+##
+### Subscription Model Overview
+    const subscriptionSchema = new Schema({
+        subscriber: {
+            type: Schema.Types.ObjectId,    // one who is subscribing
+            ref: "User"
+        },
+        channel: {
+            type: Schema.Types.ObjectId,    // one to whom 'subscriber' is subscribing
+            ref: "User"
+        }
+    },{timestamps: true});
+###
+    - We are using Subscription Model to store subscriber and channel
+
+    - So basically, we are not using any array to store subscibers of a channel
+
+    - It means that for each subscriber a new document(data) is created
+    
+    - And same for channel, that each channel which subscribing to other channel, a new document is created
+    
+    - And also for, a single subscriber who is subscribing to multiple channels, each time a new document is created
+    
+    - So, it makes it easy count "Subscibers" and "Subscribed Channels"
+
+    - For example, there is a user "Tony" which subscribed to channel "Chai Aur Code", "Hitesh Chaudhary", "Techno Gamerz", so in order to count subscribed channels, we simply write query which basically count documents which having subscriber as "Tony", same applies to a channel
+
+    - To count subscribers, we will simply count documents which having channel as "Chai Aur Code"
