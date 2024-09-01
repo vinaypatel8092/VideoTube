@@ -326,7 +326,7 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
         },
         { new: true }
     ).select("-password");
-
+    // TODO: delete old image from cloudinary
     return res
     .status(200)
     .json(new ApiResponse(200, user, "Avatar Image updated successfully"));
@@ -355,7 +355,7 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
         },
         { new: true }
     ).select("-password");
-
+    // TODO: delete old image from cloudinary
     return res
     .status(200)
     .json(new ApiResponse(200, user, "Cover Image updated successfully"));
