@@ -118,7 +118,7 @@
     
     - And also for, a single subscriber who is subscribing to multiple channels, each time a new document is created
     
-    - So, it makes it easy count "Subscibers" and "Subscribed Channels"
+    - So, it makes it easy to count "Subscibers" and "Subscribed Channels"
 
     - For example, there is a user "Tony" which subscribed to channel "Chai Aur Code", "Hitesh Chaudhary", "Techno Gamerz", so in order to count subscribed channels, we simply write query which basically count documents which having subscriber as "Tony", same applies to a channel
 
