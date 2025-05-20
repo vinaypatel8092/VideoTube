@@ -87,13 +87,13 @@
 ### Cookies:
     - To set Cookie
         - options if cookie is only modified from server
-        - req.cookie("cookieName", cookieData, options)
+        - res.cookie("cookieName", cookieData, options)
 
     - To access cookie
         - req.cookies.<cookie_name>
 
     - To remove cookie
-        - req.clearCookie("cookieName", options)
+        - res.clearCookie("cookieName", options)
 
 ##
 ### Subscription Model Overview
