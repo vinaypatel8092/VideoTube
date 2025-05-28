@@ -64,7 +64,7 @@ const registerUser = asyncHandler( async (req, res) => {
 
     // validation for each field
     if(
-        [fullName, email, username, password].some((field) => field?.trim() === ("" || undefined))
+        [fullName, email, username, password].some((field) => field?.trim() === "" || field?.trim() === undefined)
     ){
         // reomves files uploaded by middleware from local
         removeFileFromLocalMachine(avatarLocalPath, coverImageLocalPath);
