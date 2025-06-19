@@ -1,4 +1,7 @@
-# Backend Project from Hitesh Sir's Chai aur Code Channel
+# VideoTube - Backend Project
+
+# Summary of this project
+    - This is backend project built with Node.js, Express.js, MongoDB, Mongoose, JWT, Bcrypt, and many more. It is a video hosting website similar like youtube with all the features like login, signup, upload video, like, dislike, comment, reply, subscribe, unsubscribe, and many more.
 
 ### [Model Link](https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj)
 
