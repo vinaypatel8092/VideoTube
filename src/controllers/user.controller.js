@@ -314,7 +314,7 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
 
     if(!avatar.url) {
         removeFileFromLocalMachine(avatarLocalPath, _);
-        throw new ApiError(400, "Error while uploading avatar on cloudinary");
+        throw new ApiError(500, "Error while uploading avatar on cloudinary");
     }
 
     const user = await User.findByIdAndUpdate(
@@ -343,7 +343,7 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
 
     if(!coverImage.url) {
         removeFileFromLocalMachine(_, coverImageLocalPath);
-        throw new ApiError(400, "Error while uploading cover image on cloudinary");
+        throw new ApiError(500, "Error while uploading cover image on cloudinary");
     }
 
     const user = await User.findByIdAndUpdate(
@@ -427,7 +427,6 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
             }
         }
     ]);
-    console.log("channel: ", channel);
     
     if(!channel?.length) {
         throw new ApiError(404, "Channel does not exist");
