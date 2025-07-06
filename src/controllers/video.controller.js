@@ -8,14 +8,14 @@ import { escapeRegExp, removeFileFromLocalMachine } from "../utils/helper.js";
 
 // get all videos based on query, sort, pagination
 const getAllVideos = asyncHandler(async (req, res) => {
-    const { page = 1, limit = 10, query, sortBy="createdAt", sortType="desc", userId } = req.query;
+    const { query, sortBy="createdAt", sortType="desc", userId } = req.query;
     // create matchObject to match criteria
     // add conditions for query and userId for matching
     // add sorting condtions
     // add pagination
 
-    page = parseInt(page) || 1;
-    limit = parseInt(limit) || 10;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
     const matchObject = {
         $and: [
             { isPublished: true }
@@ -163,7 +163,9 @@ const getVideoById = asyncHandler(async (req, res) => {
 
     const video = await Video.aggregate([
         {
-            _id: new mongoose.Types.ObjectId(videoId)
+            $match: {
+                _id: new mongoose.Types.ObjectId(videoId)
+            }
         },
         {
             $lookup: {
@@ -225,7 +227,7 @@ const updateVideo = asyncHandler(async (req, res) => {
         throw new ApiError(404, "Video does not exist");
     }
 
-    if(req.user._id !== video.owner) {
+    if(req.user._id.toString() !== video.owner.toString()) {
         if(thumbnailLocalPath) removeFileFromLocalMachine(thumbnailLocalPath);
         throw new ApiError(400, "You are not the owner of this video");
     }
@@ -263,7 +265,7 @@ const deleteVideo = asyncHandler(async (req, res) => {
         throw new ApiError(404, "Video does not exist");
     }
 
-    if(req.user._id !== video.owner) {
+    if(req.user._id.toString() !== video.owner.toString()) {
         throw new ApiError(400, "You are not the owner of this video");
     }
 
@@ -293,7 +295,7 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
         throw new ApiError(404, "Video does not exist");
     }
 
-    if(req.user._id !== video.owner) {
+    if(req.user._id.toString() !== video.owner.toString()) {
         throw new ApiError(400, "You are not the owner of this video");
     }
 
