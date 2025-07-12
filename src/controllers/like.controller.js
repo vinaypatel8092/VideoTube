@@ -161,23 +161,23 @@ const getLikedVideos = asyncHandler(async (req, res) => {
         // lookup videos (only published)
         {
             $lookup: {
-            from: "videos",
-            localField: "video",
-            foreignField: "_id",
-            as: "video",
-            pipeline: [
-                { $match: { isPublished: true } },
-                {
-                    $lookup: {
-                        from: "users",
-                        localField: "owner",
-                        foreignField: "_id",
-                        as: "owner",
-                        pipeline: [{ $project: { name: 1, avatar: 1 } }],
+                from: "videos",
+                localField: "video",
+                foreignField: "_id",
+                as: "video",
+                pipeline: [
+                    { $match: { isPublished: true } },
+                    {
+                        $lookup: {
+                            from: "users",
+                            localField: "owner",
+                            foreignField: "_id",
+                            as: "owner",
+                            pipeline: [{ $project: { fullName: 1, avatar: 1, username: 1 } }],
+                        },
                     },
-                },
-                { $unwind: "$owner" },
-            ],
+                    { $unwind: "$owner" },
+                ],
             },
         },
         // unwind video arrays, drop empty arrays automatically
