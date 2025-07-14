@@ -195,10 +195,6 @@ const getLikedVideos = asyncHandler(async (req, res) => {
         }
     ]);
 
-    if(!likedVideos.length) {
-        throw new ApiError(404, "No videos found");
-    }
-
     return res
     .status(200)
     .json(

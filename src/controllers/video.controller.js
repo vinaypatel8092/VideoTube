@@ -3,7 +3,7 @@ import { Video } from "../models/video.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { deleteOnCloudinary, uploadOnCloudinary } from "../utils/cloudinary.js";
+import { deleteFromCloudinary, uploadOnCloudinary } from "../utils/cloudinary.js";
 import { escapeRegExp, removeFileFromLocalMachine } from "../utils/helper.js";
 
 // get all videos based on query, sort, pagination
@@ -204,9 +204,9 @@ const getVideoById = asyncHandler(async (req, res) => {
     );
 });
 
+// update video details like title, description, thumbnail
 const updateVideo = asyncHandler(async (req, res) => {
     const { videoId } = req.params;
-    //TODO: update video details like title, description, thumbnail
     // get data and thumbnail from request
     // check video exist
     // upload thumbnail to cloudinary
@@ -240,7 +240,7 @@ const updateVideo = asyncHandler(async (req, res) => {
         if(!thumbnail?.url) {
             throw new ApiError(500, "Error while uploading thumbnail.");
         }
-        await deleteOnCloudinary(video.thumbnail, "image");
+        await deleteFromCloudinary(video.thumbnail, "image");
         video.thumbnail = thumbnail.url;
     }
 
@@ -270,8 +270,8 @@ const deleteVideo = asyncHandler(async (req, res) => {
     }
 
     // delete video and thumbnail from cloudinary
-    await deleteOnCloudinary(video.thumbnail, "image");
-    await deleteOnCloudinary(video.videoFile, "video");
+    await deleteFromCloudinary(video.thumbnail, "image");
+    await deleteFromCloudinary(video.videoFile, "video");
 
     // delete video
     await Video.findByIdAndDelete(videoId);

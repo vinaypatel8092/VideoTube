@@ -1,3 +1,5 @@
+import fs from "fs";
+
 function escapeRegExp(string = '') {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }

@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import {ApiError} from "../utils/ApiError.js"
 import { User } from "../models/user.model.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { deleteFromCloudinary, uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 import fs from "fs";
@@ -48,7 +48,6 @@ const registerUser = asyncHandler( async (req, res) => {
     const {fullName, email, username, password} = req.body;
 
     // taking path of avatar and coverImage to upload on cloudinary
-    // console.log("\nreq files: ", req.files);
     const avatarLocalPath = req.files?.avatar?.[0]?.path;
     // const coverImageLocalPath = req.files?.coverImage?.[0].path;     // alternative of below
     
@@ -310,6 +309,11 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Avatar file is missing");
     }
 
+    const user = await User.findById(req.user._id);
+    if(!user) {
+        throw new ApiError(404, "User not found");
+    }
+
     const avatar = await uploadOnCloudinary(avatarLocalPath);
 
     if(!avatar.url) {
@@ -317,7 +321,10 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
         throw new ApiError(500, "Error while uploading avatar on cloudinary");
     }
 
-    const user = await User.findByIdAndUpdate(
+    // delete old avatar from cloudinary
+    await deleteFromCloudinary(user.avatar, "image");
+
+    const updatedUser = await User.findByIdAndUpdate(
         req.user?._id,
         {
             $set: {
@@ -326,10 +333,10 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
         },
         { new: true }
     ).select("-password");
-    // TODO: delete old image from cloudinary
+
     return res
     .status(200)
-    .json(new ApiResponse(200, user, "Avatar Image updated successfully"));
+    .json(new ApiResponse(200, updatedUser, "Avatar Image updated successfully"));
 });
 
 const updateUserCoverImage = asyncHandler(async (req, res) => {
@@ -339,6 +346,11 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Cover image file is missing");
     }
 
+    const user = await User.findById(req.user._id);
+    if(!user) {
+        throw new ApiError(404, "User not found");
+    }
+
     const coverImage = await uploadOnCloudinary(coverImageLocalPath);
 
     if(!coverImage.url) {
@@ -346,7 +358,12 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
         throw new ApiError(500, "Error while uploading cover image on cloudinary");
     }
 
-    const user = await User.findByIdAndUpdate(
+    // delete old cover image from cloudinary
+    if(user?.coverImage?.trim()) {
+        await deleteFromCloudinary(user?.coverImage, "image");
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
         req.user?._id,
         {
             $set: {
@@ -355,10 +372,10 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
         },
         { new: true }
     ).select("-password");
-    // TODO: delete old image from cloudinary
+
     return res
     .status(200)
-    .json(new ApiResponse(200, user, "Cover Image updated successfully"));
+    .json(new ApiResponse(200, updatedUser, "Cover Image updated successfully"));
 });
 
 // get channel details
@@ -448,7 +465,7 @@ const getWatchHistory = asyncHandler(async (req, res) => {
     const user = await User.aggregate([
         {
             $match: {
-                _id: mongoose.Types.ObjectId(req.user._id)
+                _id: new mongoose.Types.ObjectId(req.user._id)
             }
         },
         {
@@ -487,10 +504,14 @@ const getWatchHistory = asyncHandler(async (req, res) => {
         }
     ]);
 
+    if(!user.length) {
+        throw new ApiError(404, "User not found");
+    }
+
     return res
     .status(200)
-    .json(new ApiResponse(200, user[0].watchHistory), "Watch histroy fetched successfully");
-})
+    .json(new ApiResponse(200, user[0]?.watchHistory, "Watch histroy fetched successfully"));
+});
 
 export {
     registerUser,
